@@ -21,8 +21,9 @@ public class CoachController {
     private CoachService coachService;
 
     @GetMapping("")
-    public ResponseEntity<Iterable<Coach>> list(Pageable pageable) {
-        Page<Coach> coaches = coachService.findAllCoach(pageable);
+    public ResponseEntity<Iterable<Coach>> list() {
+        System.out.println("cc");
+        Iterable<Coach> coaches = coachService.findAllCoach();
         return new ResponseEntity<>(coaches, HttpStatus.OK);
     }
 }

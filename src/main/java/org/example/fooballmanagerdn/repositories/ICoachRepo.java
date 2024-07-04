@@ -2,10 +2,10 @@ package org.example.fooballmanagerdn.repositories;
 
 import org.example.fooballmanagerdn.models.Coach;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-@Service
-public interface ICoachRepo extends PagingAndSortingRepository<Coach,Long> {
+@Repository
+public interface ICoachRepo extends CrudRepository<Coach,Long> {
 
 }

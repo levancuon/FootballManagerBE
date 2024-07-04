@@ -3,7 +3,6 @@ package org.example.fooballmanagerdn.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,6 @@ import java.util.Date;
 
 @Entity
 @Component
-@Data
 @Table(name = "player")
 public class Player {
     @Id

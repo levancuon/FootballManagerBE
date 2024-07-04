@@ -5,5 +5,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ICoachService {
-    Page<Coach> findAllCoach(Pageable pageable);
+    Iterable<Coach> findAllCoach();
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.sql.Date;
 
 @Entity
-@Component
 @Table(name = "salaries")
 public class Salary {
     @Id
@@ -22,8 +21,7 @@ public class Salary {
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date endDate;
     @NotBlank
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
-    private Date hourPlay;
+    private Double hourPlay;
     @NotBlank
     @Pattern(regexp = "(^$|[0-9])",message = "Enter a number")
     private Double abilitySalary;
@@ -36,7 +34,7 @@ public class Salary {
     public Salary() {
     }
 
-    public Salary(Long id, Date startDate, Date endDate, Date hourPlay, Double abilitySalary, Double bonus, Double totalSalary) {
+    public Salary(Long id, Date startDate, Date endDate, Double hourPlay, Double abilitySalary, Double bonus, Double totalSalary) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -70,11 +68,11 @@ public class Salary {
         this.endDate = endDate;
     }
 
-    public Date getHourPlay() {
+    public Double getHourPlay() {
         return hourPlay;
     }
 
-    public void setHourPlay(Date hourPlay) {
+    public void setHourPlay(Double hourPlay) {
         this.hourPlay = hourPlay;
     }
 

@@ -10,7 +10,6 @@ import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Component
 @Table(name = "users")
 public class User {
     @Id

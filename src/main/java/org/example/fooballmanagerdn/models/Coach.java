@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Set;
 
 @Entity
-@Component
 @Table(name = "coach")
 public class Coach {
     @Id
@@ -29,7 +29,7 @@ public class Coach {
 
     @OneToMany
     @JoinColumn(name="coachId")
-    private ArrayList<Salary> salaries;
+    private Set<Salary> salaries;
 
     @OneToOne
     @JoinColumn(name = "userId", nullable = false, unique = true)
@@ -37,7 +37,7 @@ public class Coach {
     public Coach() {
     }
 
-    public Coach(Long id, String name, Date dob, Double salary, String homeTown, String abilityProfile, ArrayList<Salary> salaries, User user) {
+    public Coach(Long id, String name, Date dob, Double salary, String homeTown, String abilityProfile, Set<Salary> salaries, User user) {
         this.id = id;
         this.name = name;
         this.dob = dob;
@@ -96,11 +96,11 @@ public class Coach {
         this.abilityProfile = abilityProfile;
     }
 
-    public ArrayList<Salary> getSalaries() {
+    public Set<Salary> getSalaries() {
         return salaries;
     }
 
-    public void setSalaries(ArrayList<Salary> salaries) {
+    public void setSalaries(Set<Salary> salaries) {
         this.salaries = salaries;
     }
 

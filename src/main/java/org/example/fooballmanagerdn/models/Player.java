@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
-@Component
 @Table(name = "player")
 public class Player {
     @Id

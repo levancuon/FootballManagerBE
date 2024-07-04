@@ -15,10 +15,10 @@ public class Salary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @DateTimeFormat(pattern = "yyyy/mm/dd")
     private Date startDate;
     @NotBlank
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @DateTimeFormat(pattern = "yyyy/mm/dd")
     private Date endDate;
     @NotBlank
     private Double hourPlay;

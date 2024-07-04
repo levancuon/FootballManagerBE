@@ -18,7 +18,7 @@ public class Player {
     @NotBlank
     private String name;
     @NotBlank
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @DateTimeFormat(pattern = "yyyy/mm/dd")
     private Date dob;
     @NotBlank
     private String homeTown;

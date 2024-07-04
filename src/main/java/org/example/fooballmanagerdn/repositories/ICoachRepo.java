@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ICoachRepo extends CrudRepository<Coach,Long> {
-
+    Iterable<Coach> findAllByNameContaining(String search);
 }

@@ -2,6 +2,7 @@ package org.example.fooballmanagerdn.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -14,21 +15,21 @@ public class Salary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy/mm/dd")
     private Date startDate;
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy/mm/dd")
     private Date endDate;
-    @NotBlank
+    @NotNull
     private Double hourPlay;
-    @NotBlank
+    @NotNull
     @Pattern(regexp = "(^$|[0-9])",message = "Enter a number")
     private Double abilitySalary;
-    @NotBlank
+    @NotNull
     @Pattern(regexp = "(^$|[0-9])",message = "Enter a number")
     private Double Bonus;
-    @NotBlank
+    @NotNull
     private Double totalSalary;
 
     public Salary() {

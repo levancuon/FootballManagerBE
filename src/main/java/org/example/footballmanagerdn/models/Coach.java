@@ -2,11 +2,12 @@ package org.example.fooballmanagerdn.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
+
 
 import java.sql.Date;
-import java.util.ArrayList;
+
 import java.util.Set;
 
 @Entity
@@ -17,10 +18,10 @@ public class Coach {
     private Long id;
     @NotBlank
     private String name;
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy/mm/dd")
     private Date dob;
-    @NotBlank
+    @NotNull
     private Double salary;
     @NotBlank
     private String homeTown;

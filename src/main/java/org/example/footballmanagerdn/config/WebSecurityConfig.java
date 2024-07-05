@@ -1,4 +1,4 @@
-package org.example.fooballmanagerdn.config;
+package org.example.footballmanagerdn.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

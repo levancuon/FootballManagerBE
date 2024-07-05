@@ -1,4 +1,4 @@
-package org.example.fooballmanagerdn.services;
+package org.example.footballmanagerdn.services;
 
 import org.example.fooballmanagerdn.models.Coach;
 import org.springframework.data.domain.Page;

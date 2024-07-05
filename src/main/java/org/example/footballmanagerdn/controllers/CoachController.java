@@ -1,7 +1,7 @@
-package org.example.fooballmanagerdn.controllers;
+package org.example.footballmanagerdn.controllers;
 
 import org.example.fooballmanagerdn.models.Coach;
-import org.example.fooballmanagerdn.services.iml.CoachService;
+import org.example.footballmanagerdn.services.iml.CoachService;
 import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -52,15 +52,21 @@ public class CoachController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Coach> edit(@PathVariable("id") Long id, @RequestBody Coach coach) {
+    public ResponseEntity<?> edit(@Validated @RequestBody Coach coach, @PathVariable("id") Long id ,BindingResult bindingResult) {
         Coach coach1 = coachService.findById(id);
-        if (coach1 == null) {
+        if (coach1==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        if (bindingResult.hasFieldErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
         coach.setId(coach1.getId());
-        System.out.println(coach);
         coachService.save(coach);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping("")
@@ -70,10 +76,10 @@ public class CoachController {
             for (FieldError error : bindingResult.getFieldErrors()) {
                 errors.put(error.getField(), error.getDefaultMessage());
             }
-            return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
         coachService.save(coach);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/search")

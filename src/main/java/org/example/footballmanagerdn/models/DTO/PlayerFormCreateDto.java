@@ -37,7 +37,7 @@ public class PlayerUserDto {
     private String status;
     @NotNull
     @Email
-    private String email;
+    private String userEmail;
     @NotNull
-    private String password;
+    private String userPassword;
 }

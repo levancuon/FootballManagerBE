@@ -18,6 +18,7 @@ public class User {
 
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotBlank

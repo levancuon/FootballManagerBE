@@ -1,19 +1,23 @@
 package org.example.footballmanagerdn.controllers;
 
 import org.example.footballmanagerdn.models.DTO.PlayerDto;
-import org.example.footballmanagerdn.models.DTO.PlayerUserDto;
+import org.example.footballmanagerdn.models.DTO.PlayerFormCreateDto;
+import org.example.footballmanagerdn.models.DTO.PlayerFormUpdateDto;
+import org.example.footballmanagerdn.models.Player;
 import org.example.footballmanagerdn.services.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+
 
 @RestController
 @CrossOrigin("*")
@@ -22,6 +26,7 @@ public class PlayerController {
 
     @Autowired
     private IPlayerService playerService;
+
 
     @RequestMapping("")
     public ResponseEntity<Page<PlayerDto>> index(
@@ -40,17 +45,24 @@ public class PlayerController {
 
     @PostMapping("")
     public ResponseEntity<?> create(
-            @Validated @RequestBody PlayerUserDto playerUserDto,
-            BindingResult bindingResult
+            @Validated @ModelAttribute PlayerFormCreateDto playerFormCreateDto
     ) {
-        if (bindingResult.hasFieldErrors()) {
-            Map<String, String> errors = new HashMap<>();
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errors.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-        }
-        playerService.createPlayer(playerUserDto);
+        playerService.createPlayer(playerFormCreateDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(
+            @Validated @ModelAttribute PlayerFormUpdateDto playerFormUpdateDto,
+            @PathVariable("id") Long id
+    ) {
+        playerService.updatePlayer(id, playerFormUpdateDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        playerService.deletePlayer(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

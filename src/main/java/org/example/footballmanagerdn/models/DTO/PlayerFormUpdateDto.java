@@ -4,13 +4,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 
 @Data
-public class PlayerFormCreateDto {
+public class PlayerFormUpdateDto {
     @NotBlank
     private String name;
 
@@ -31,11 +30,4 @@ public class PlayerFormCreateDto {
     private String position;
     private MultipartFile avatar;
     private String status;
-
-    @NotNull
-    @Email
-    private String userEmail;
-
-    @NotNull
-    private String userPassword;
 }

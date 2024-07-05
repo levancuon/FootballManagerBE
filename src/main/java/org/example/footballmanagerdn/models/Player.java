@@ -2,7 +2,10 @@ package org.example.footballmanagerdn.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
@@ -11,6 +14,9 @@ import java.util.Set;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "players")
 public class Player {
     @Id
@@ -20,7 +26,6 @@ public class Player {
     @NotBlank
     private String name;
 
-    @NotBlank
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date dob;
 

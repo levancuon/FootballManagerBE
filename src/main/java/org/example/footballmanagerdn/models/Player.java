@@ -1,13 +1,12 @@
-package org.example.fooballmanagerdn.models;
+package org.example.footballmanagerdn.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "player")
@@ -41,7 +40,7 @@ public class Player {
 
     @OneToMany
     @JoinColumn(name="playerId")
-    private ArrayList<Salary> salaries;
+    private Set<Salary> salaries;
 
     @OneToOne
     @JoinColumn(name = "userId", nullable = false, unique = true)

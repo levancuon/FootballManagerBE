@@ -1,10 +1,7 @@
 package org.example.footballmanagerdn.services;
 
-import org.example.fooballmanagerdn.models.Coach;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.util.Optional;
+import org.example.footballmanagerdn.models.Coach;
 
 public interface ICoachService {
     Iterable<Coach> findAllCoach();

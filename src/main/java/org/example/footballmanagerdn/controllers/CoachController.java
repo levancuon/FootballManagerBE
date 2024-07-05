@@ -4,6 +4,7 @@ import org.example.footballmanagerdn.models.Coach;
 import org.example.footballmanagerdn.models.DTO.CoachWithUserDTO;
 import org.example.footballmanagerdn.services.iml.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,6 @@ public class CoachController {
         }
         return new ResponseEntity<>(coach, HttpStatus.OK);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Coach> delete(@PathVariable("id") Long id) {
@@ -80,13 +80,16 @@ public class CoachController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<Iterable<Coach>> search(@RequestParam String search) {
-        Iterable<Coach> coaches = coachService.findAllByNameContaining(search);
-        if (coaches == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(coaches, HttpStatus.OK);
-    }
+//    @GetMapping("/search")
+//    public ResponseEntity<Page<CoachWithUserDTO>> search(
+//            @RequestParam String search,
+//            @RequestParam String
+//    ) {
+//        Iterable<Coach> coaches = coachService.findAllByNameContaining(search);
+//        if (coaches == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(coaches, HttpStatus.OK);
+//    }
 
 }

@@ -2,40 +2,45 @@ package org.example.footballmanagerdn.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "player")
+@Data
+@Table(name = "players")
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     private String name;
+
     @NotBlank
-    @DateTimeFormat(pattern = "yyyy/mm/dd")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date dob;
-    @NotBlank
+
     private String homeTown;
-    @NotBlank
-    private String playingPosition;
-    @NotBlank
+
     private String performance;
-    @NotBlank
-    @Pattern(regexp = "(^$|[0-9])")
+
     private Double height;
-    @NotBlank
-    @Pattern(regexp = "(^$|[0-9])")
+
     private Double weight;
-    @NotBlank
-    private String profileRank;
-    @NotBlank
+    private Double salary;
+
+    private String ranking;
+
+    private String abilityProfile;
+
+    private String position;
+
     private String avatar;
-    @NotBlank
+
     private String status;
 
     @OneToMany
@@ -46,6 +51,7 @@ public class Player {
     @JoinColumn(name = "userId", nullable = false, unique = true)
     private User user;
 
+<<<<<<< Updated upstream
     public Player() {
     }
 
@@ -168,4 +174,7 @@ public class Player {
     public void setUser(User user) {
         this.user = user;
     }
+=======
+
+>>>>>>> Stashed changes
 }

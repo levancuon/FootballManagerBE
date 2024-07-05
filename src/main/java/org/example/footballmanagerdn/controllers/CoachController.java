@@ -1,6 +1,7 @@
 package org.example.footballmanagerdn.controllers;
 
 import org.example.footballmanagerdn.models.Coach;
+import org.example.footballmanagerdn.models.DTO.CoachWithUserDTO;
 import org.example.footballmanagerdn.services.iml.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 @CrossOrigin("*")
 @RequestMapping("/api/coach")
 public class CoachController {
@@ -49,10 +50,6 @@ public class CoachController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> edit(@Validated @RequestBody Coach coach, @PathVariable("id") Long id ,BindingResult bindingResult) {
-        Coach coach1 = coachService.findById(id);
-        if (coach1==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         if (bindingResult.hasFieldErrors()) {
             Map<String, String> errors = new HashMap<>();
             for (FieldError error : bindingResult.getFieldErrors()) {
@@ -60,13 +57,18 @@ public class CoachController {
             }
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
+        Coach coach1 = coachService.findById(id);
+        if (coach1==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         coach.setId(coach1.getId());
         coachService.save(coach);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping("")
-    public ResponseEntity<?> create(@Validated @RequestBody Coach coach, BindingResult bindingResult) {
+    public ResponseEntity<?> create(@Validated @RequestBody CoachWithUserDTO coachWithUserDTO, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             Map<String, String> errors = new HashMap<>();
             for (FieldError error : bindingResult.getFieldErrors()) {
@@ -74,7 +76,7 @@ public class CoachController {
             }
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
-        coachService.save(coach);
+        coachService.createCoach(coachWithUserDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -21,8 +21,16 @@ public class User {
     private String email;
 
     @NotBlank
-    @Size(min=6,max=8)
     private String password;
+
+    public User() {
+    }
+
+    public User(Long id, String email, String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
 
     public Long getId() {
         return id;

@@ -2,9 +2,16 @@ package org.example.footballmanagerdn.services;
 
 
 import org.example.footballmanagerdn.models.Coach;
+import org.example.footballmanagerdn.models.DTO.CoachDTO;
+import org.example.footballmanagerdn.models.DTO.CoachWithUserDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.Date;
 
 public interface ICoachService {
-    Iterable<Coach> findAllCoach();
+    Page<CoachDTO> findAll(int page, int size,String name, String homeTown);
+    Page<Coach> findAllCoach(Pageable pageable);
 
     Coach findById(Long id);
 

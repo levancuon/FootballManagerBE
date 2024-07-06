@@ -18,7 +18,7 @@ public class Coach {
     private Long id;
     @NotBlank
     private String name;
-    @NotNull
+
     @DateTimeFormat(pattern = "yyyy/mm/dd")
     private Date dob;
     @NotNull

@@ -1,10 +1,12 @@
 package org.example.footballmanagerdn.controllers;
 
 import org.example.footballmanagerdn.models.Coach;
+import org.example.footballmanagerdn.models.DTO.CoachDTO;
 import org.example.footballmanagerdn.models.DTO.CoachWithUserDTO;
 import org.example.footballmanagerdn.services.iml.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +27,8 @@ public class CoachController {
     private CoachService coachService;
 
     @GetMapping("")
-    public ResponseEntity<Iterable<Coach>> list() {
-        Iterable<Coach> coaches = coachService.findAllCoach();
+    public ResponseEntity<Page<Coach>> list(Pageable pageable) {
+        Page<Coach> coaches = coachService.findAllCoach(pageable);
         return new ResponseEntity<>(coaches, HttpStatus.OK);
     }
 
@@ -61,7 +64,6 @@ public class CoachController {
         if (coach1==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         coach.setId(coach1.getId());
         coachService.save(coach);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
@@ -80,16 +82,15 @@ public class CoachController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<Page<CoachWithUserDTO>> search(
-//            @RequestParam String search,
-//            @RequestParam String
-//    ) {
-//        Iterable<Coach> coaches = coachService.findAllByNameContaining(search);
-//        if (coaches == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(coaches, HttpStatus.OK);
-//    }
+    @GetMapping("/search")
+    public ResponseEntity<Page<CoachDTO>> search(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String homeTown
+            ) {
+        Page<CoachDTO> coaches = coachService.findAll(page,size,name,homeTown);
+        return new ResponseEntity<>(coaches, HttpStatus.OK);
+    }
 
 }

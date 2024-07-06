@@ -2,6 +2,7 @@ package org.example.footballmanagerdn.services.iml;
 
 
 import org.example.footballmanagerdn.models.Coach;
+import org.example.footballmanagerdn.models.DTO.CoachDTO;
 import org.example.footballmanagerdn.models.DTO.CoachWithUserDTO;
 import org.example.footballmanagerdn.models.Player;
 import org.example.footballmanagerdn.models.User;
@@ -9,9 +10,14 @@ import org.example.footballmanagerdn.repositories.ICoachRepo;
 import org.example.footballmanagerdn.services.ICoachService;
 import org.example.footballmanagerdn.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 
 @Service
@@ -24,9 +30,16 @@ public class CoachService implements ICoachService {
     private IUserService userService;
 
     @Override
-    public Iterable<Coach> findAllCoach() {
-        return coachRepo.findAll();
+    public Page<CoachDTO> findAll(int page, int size, String name, String homeTown) {
+        Pageable pageable = PageRequest.of(page,size);
+        return coachRepo.findAll(pageable,name,homeTown);
     }
+
+    @Override
+    public Page<Coach> findAllCoach(Pageable pageable) {
+        return coachRepo.findAll(pageable);
+    }
+
 
     @Override
     public Coach findById(Long id) {

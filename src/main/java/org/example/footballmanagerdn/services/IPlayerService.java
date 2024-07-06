@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import java.util.Optional;
 
 public interface IPlayerService {
-    Page<PlayerDto> findAll(int page, int size, String sort, String name, Double salaryMin, Double salaryMax, String position, String status);
+    Page<PlayerDto> findAll(int page, int size, String sort, String name, Double salaryMin, Double salaryMax, Long position, String status);
 
     void createPlayer(PlayerFormCreateDto playerFormCreateDto);
 

@@ -36,10 +36,10 @@ public class PlayerController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Double salaryMin,
             @RequestParam(required = false) Double salaryMax,
-            @RequestParam(required = false) String position,
+            @RequestParam(required = false) Long positionId,
             @RequestParam(required = false) String status
     ) {
-        Page<PlayerDto> documents = playerService.findAll(page, size, sort, name, salaryMin, salaryMax, position, status);
+        Page<PlayerDto> documents = playerService.findAll(page, size, sort, name, salaryMin, salaryMax, positionId, status);
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
 

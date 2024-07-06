@@ -15,14 +15,14 @@ public interface IPlayerRepo extends PagingAndSortingRepository<Player, Long>, C
             "(:name IS NULL OR p.name like %:name%) AND " +
             "(:salaryMin IS NULL OR p.salary >= :salaryMin) AND " +
             "(:salaryMax IS NULL OR p.salary <= :salaryMax) AND " +
-            "(:position IS NULL OR p.position = :position) AND " +
-            "(:status IS NULL OR p.status = :status)")
+            "(:positionId IS NULL OR p.position.id = :positionId) AND " +
+            "(:status IS NULL OR :status = '' OR p.status = :status)")
     Page<PlayerDto> findAll(
             Pageable pageable,
             @Param("name") String name,
             @Param("salaryMin") Double salaryMin,
             @Param("salaryMax") Double salaryMax,
-            @Param("position") String position,
+            @Param("positionId") Long positionId,
             @Param("status") String status
     );
 }

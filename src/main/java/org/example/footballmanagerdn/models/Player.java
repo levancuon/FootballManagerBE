@@ -42,8 +42,6 @@ public class Player {
 
     private String abilityProfile;
 
-    private String position;
-
     private String avatar;
 
     private String status;
@@ -55,4 +53,8 @@ public class Player {
     @OneToOne
     @JoinColumn(name = "userId", nullable = false, unique = true)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "positionId")
+    private Position position;
 }

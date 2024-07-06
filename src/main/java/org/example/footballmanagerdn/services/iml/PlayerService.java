@@ -5,8 +5,10 @@ import org.example.footballmanagerdn.models.DTO.PlayerDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormCreateDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormUpdateDto;
 import org.example.footballmanagerdn.models.Player;
+import org.example.footballmanagerdn.models.Position;
 import org.example.footballmanagerdn.models.User;
 import org.example.footballmanagerdn.repositories.IPlayerRepo;
+import org.example.footballmanagerdn.repositories.IPositionRepo;
 import org.example.footballmanagerdn.repositories.IUserRepo;
 import org.example.footballmanagerdn.services.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +33,18 @@ public class PlayerService implements IPlayerService {
     @Autowired
     private IUserRepo userRepo;
     @Autowired
+    private IPositionRepo positionRepo;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Value("${upload.path}")
     private String fileUpload;
 
     @Override
-    public Page<PlayerDto> findAll(int page, int size, String sortString, String name, Double salaryMin, Double salaryMax, String position, String status) {
+    public Page<PlayerDto> findAll(int page, int size, String sortString, String name, Double salaryMin, Double salaryMax, Long positionId, String status) {
         Sort sort = createSort(sortString);
         Pageable pageable = PageRequest.of(page, size, sort);
-        return playerRepo.findAll(pageable, name, salaryMin, salaryMax, position, status);
+        return playerRepo.findAll(pageable, name, salaryMin, salaryMax, positionId, status);
     }
 
     private Sort createSort(String sortString) {
@@ -66,6 +70,9 @@ public class PlayerService implements IPlayerService {
 
         String avatarFileName = saveFile(playerFormCreateDto.getAvatar());
 
+//  Todo: refactor tách hàm
+        Position position = positionRepo.findById(playerFormCreateDto.getPositionId()).orElse(null);
+
 // Todo: refactor tách hàm
         Player player = Player.builder()
                 .name(playerFormCreateDto.getName())
@@ -77,7 +84,7 @@ public class PlayerService implements IPlayerService {
                 .salary(playerFormCreateDto.getSalary())
                 .ranking(playerFormCreateDto.getRanking())
                 .abilityProfile(playerFormCreateDto.getAbilityProfile())
-                .position(playerFormCreateDto.getPosition())
+                .position(position)
                 .status(playerFormCreateDto.getStatus())
                 .avatar(avatarFileName)
                 .user(user)
@@ -122,6 +129,8 @@ public class PlayerService implements IPlayerService {
             throw new NotFoundException("Player not found");
         }
 
+        Position position = positionRepo.findById(playerFormUpdateDto.getPositionId()).orElse(null);
+
         String avatarFileName = saveFile(playerFormUpdateDto.getAvatar());
 
         Player player = playerOptional.get();
@@ -134,7 +143,7 @@ public class PlayerService implements IPlayerService {
         player.setSalary(playerFormUpdateDto.getSalary());
         player.setRanking(playerFormUpdateDto.getRanking());
         player.setAbilityProfile(playerFormUpdateDto.getAbilityProfile());
-        player.setPosition(playerFormUpdateDto.getPosition());
+        player.setPosition(position);
         player.setStatus(playerFormUpdateDto.getStatus());
         player.setAvatar(avatarFileName);
 

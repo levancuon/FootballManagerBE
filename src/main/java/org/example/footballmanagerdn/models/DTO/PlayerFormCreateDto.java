@@ -28,7 +28,7 @@ public class PlayerFormCreateDto {
 
     private String ranking;
     private String abilityProfile;
-    private String position;
+    private Long positionId;
     private MultipartFile avatar;
     private String status;
 

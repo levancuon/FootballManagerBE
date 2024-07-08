@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Iterator;
 import java.util.Optional;
 
 
@@ -81,4 +83,13 @@ public class PlayerController {
         playerService.createSalary(playerId, salary);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/{id}/pays")
+    public ResponseEntity<Iterable<Salary>> getPays(
+            @PathVariable("id") Long playerId
+    ) {
+        Iterable<Salary> salaries = playerService.getSalaries(playerId);
+        return new ResponseEntity<>(salaries, HttpStatus.OK);
+    }
+
 }

@@ -7,6 +7,7 @@ import org.example.footballmanagerdn.models.Player;
 import org.example.footballmanagerdn.models.Salary;
 import org.springframework.data.domain.Page;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 public interface IPlayerService {
@@ -23,4 +24,6 @@ public interface IPlayerService {
     void deletePlayer(Long id);
 
     void createSalary(Long playerId, Salary salary);
+
+    Iterable<Salary> getSalaries(Long playerId);
 }

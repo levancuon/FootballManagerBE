@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Optional;
 
 @Service
@@ -204,6 +205,11 @@ public class PlayerService implements IPlayerService {
         salary.setTotalSalary(totalSalary);
         salary.setPlayerId(playerId);
         salaryRepo.save(salary);
+    }
+
+    @Override
+    public Iterable<Salary> getSalaries(Long playerId) {
+        return salaryRepo.findAllByPlayerId(playerId);
     }
 
 

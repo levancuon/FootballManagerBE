@@ -6,9 +6,11 @@ import org.example.footballmanagerdn.models.DTO.PlayerFormCreateDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormUpdateDto;
 import org.example.footballmanagerdn.models.Player;
 import org.example.footballmanagerdn.models.Position;
+import org.example.footballmanagerdn.models.Salary;
 import org.example.footballmanagerdn.models.User;
 import org.example.footballmanagerdn.repositories.IPlayerRepo;
 import org.example.footballmanagerdn.repositories.IPositionRepo;
+import org.example.footballmanagerdn.repositories.ISalaryRepo;
 import org.example.footballmanagerdn.repositories.IUserRepo;
 import org.example.footballmanagerdn.services.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,8 @@ public class PlayerService implements IPlayerService {
     private IUserRepo userRepo;
     @Autowired
     private IPositionRepo positionRepo;
+    @Autowired
+    private ISalaryRepo salaryRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -118,8 +122,8 @@ public class PlayerService implements IPlayerService {
     }
 
     @Override
-    public Optional<Player> findById(Long id) {
-        return playerRepo.findById(id);
+    public Optional<PlayerDto> findPlayerById(Long id) {
+        return playerRepo.findPlayerById(id);
     }
 
     @Override
@@ -145,18 +149,33 @@ public class PlayerService implements IPlayerService {
         player.setAbilityProfile(playerFormUpdateDto.getAbilityProfile());
         player.setPosition(position);
         player.setStatus(playerFormUpdateDto.getStatus());
-        player.setAvatar(avatarFileName);
+        if(avatarFileName != null) {
+            player.setAvatar(avatarFileName);
+        }
 
         playerRepo.save(player);
     }
 
     @Override
     public void deletePlayer(Long id) {
-        Optional<Player> playerOptional = findById(id);
+        Optional<Player> playerOptional = playerRepo.findById(id);;
         if (playerOptional.isEmpty()) {
             throw new NotFoundException("Player not found");
         }
         playerRepo.deleteById(id);
+    }
+
+    @Override
+    public void createSalary(Long playerId, Salary salary) {
+        Optional<Player> playerOptional = playerRepo.findById(playerId);;
+        if (playerOptional.isEmpty()) {
+            throw new NotFoundException("Player not found");
+        }
+
+        Double totalSalary = playerOptional.get().getSalary() + salary.getBonus() + salary.getAbilitySalary()* salary.getHourPlay();
+        salary.setTotalSalary(totalSalary);
+        salary.setPlayerId(playerId);
+        salaryRepo.save(salary);
     }
 
 

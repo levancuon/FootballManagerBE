@@ -4,6 +4,7 @@ import org.example.footballmanagerdn.models.DTO.PlayerDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormCreateDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormUpdateDto;
 import org.example.footballmanagerdn.models.Player;
+import org.example.footballmanagerdn.models.Salary;
 import org.springframework.data.domain.Page;
 
 import java.util.Optional;
@@ -15,9 +16,11 @@ public interface IPlayerService {
 
     void save(Player player);
 
-    Optional<Player> findById(Long id);
+    Optional<PlayerDto> findPlayerById(Long id);
 
     void updatePlayer(Long id, PlayerFormUpdateDto playerFormUpdateDto);
 
     void deletePlayer(Long id);
+
+    void createSalary(Long playerId, Salary salary);
 }

@@ -3,20 +3,15 @@ package org.example.footballmanagerdn.controllers;
 import org.example.footballmanagerdn.models.DTO.PlayerDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormCreateDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormUpdateDto;
-import org.example.footballmanagerdn.models.Player;
+import org.example.footballmanagerdn.models.Salary;
 import org.example.footballmanagerdn.services.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
+import java.util.Optional;
 
 
 @RestController
@@ -43,12 +38,24 @@ public class PlayerController {
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> show(
+            @PathVariable("id") Long id
+    ) {
+        Optional<PlayerDto> player = playerService.findPlayerById(id);
+        if (player.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(player, HttpStatus.OK);
+    }
+
+
     @PostMapping("")
     public ResponseEntity<?> create(
             @Validated @ModelAttribute PlayerFormCreateDto playerFormCreateDto
     ) {
         playerService.createPlayer(playerFormCreateDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -57,12 +64,21 @@ public class PlayerController {
             @PathVariable("id") Long id
     ) {
         playerService.updatePlayer(id, playerFormUpdateDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         playerService.deletePlayer(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/{id}/pays")
+    public ResponseEntity<?> pay(
+            @PathVariable("id") Long playerId,
+            @Validated @RequestBody Salary salary
+    ) {
+        playerService.createSalary(playerId, salary);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

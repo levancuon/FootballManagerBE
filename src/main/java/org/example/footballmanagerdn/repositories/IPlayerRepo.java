@@ -9,6 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface IPlayerRepo extends PagingAndSortingRepository<Player, Long>, CrudRepository<Player, Long> {
 
     @Query("SELECT p FROM Player p WHERE " +
@@ -16,7 +18,7 @@ public interface IPlayerRepo extends PagingAndSortingRepository<Player, Long>, C
             "(:salaryMin IS NULL OR p.salary >= :salaryMin) AND " +
             "(:salaryMax IS NULL OR p.salary <= :salaryMax) AND " +
             "(:positionId IS NULL OR p.position.id = :positionId) AND " +
-            "(:status IS NULL OR :status = '' OR p.status = :status)")
+            "(:status IS NULL OR :status = ''    OR p.status = :status)")
     Page<PlayerDto> findAll(
             Pageable pageable,
             @Param("name") String name,
@@ -25,4 +27,6 @@ public interface IPlayerRepo extends PagingAndSortingRepository<Player, Long>, C
             @Param("positionId") Long positionId,
             @Param("status") String status
     );
+
+    Optional<PlayerDto> findPlayerById(Long id);
 }

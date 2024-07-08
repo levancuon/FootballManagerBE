@@ -12,7 +12,7 @@ import java.util.Date;
 public interface ICoachService {
     Page<CoachDTO> findAll(int page, int size,String name, String homeTown);
     Page<Coach> findAllCoach(Pageable pageable);
-
+    Iterable<Coach> findAllCoach();
     Coach findById(Long id);
 
     void remove(Long id);

@@ -31,6 +31,11 @@ public class CoachController {
         Page<Coach> coaches = coachService.findAllCoach(pageable);
         return new ResponseEntity<>(coaches, HttpStatus.OK);
     }
+    @GetMapping("/list")
+    public ResponseEntity<Iterable<Coach>> list() {
+        Iterable<Coach> coaches = coachService.findAllCoach();
+        return new ResponseEntity<>(coaches, HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Coach> findById(@PathVariable("id") Long id) {
@@ -48,7 +53,7 @@ public class CoachController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         coachService.remove(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")

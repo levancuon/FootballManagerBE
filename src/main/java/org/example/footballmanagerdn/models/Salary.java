@@ -24,7 +24,7 @@ public class Salary {
     @NotNull
     @Pattern(regexp = "(^$|[0-9])",message = "Enter a number")
     private Double abilitySalary;
-    @NotNull
+
     @Pattern(regexp = "(^$|[0-9])",message = "Enter a number")
     private Double Bonus;
     @NotNull

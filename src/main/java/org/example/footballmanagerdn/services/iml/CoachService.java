@@ -39,6 +39,10 @@ public class CoachService implements ICoachService {
     public Page<Coach> findAllCoach(Pageable pageable) {
         return coachRepo.findAll(pageable);
     }
+    @Override
+    public Iterable<Coach> findAllCoach() {
+        return coachRepo.findAll();
+    }
 
 
     @Override

@@ -129,27 +129,55 @@ public class PlayerService implements IPlayerService {
     @Override
     public void updatePlayer(Long id, PlayerFormUpdateDto playerFormUpdateDto) {
         Optional<Player> playerOptional = playerRepo.findById(id);
+
         if (playerOptional.isEmpty()) {
             throw new NotFoundException("Player not found");
         }
 
-        Position position = positionRepo.findById(playerFormUpdateDto.getPositionId()).orElse(null);
+        Player player = playerOptional.get();
+
+        Position position = null;
+        if (playerFormUpdateDto.getPositionId() != null) {
+            position = positionRepo.findById(playerFormUpdateDto.getPositionId()).orElse(null);
+        }
+
 
         String avatarFileName = saveFile(playerFormUpdateDto.getAvatar());
 
-        Player player = playerOptional.get();
-        player.setName(playerFormUpdateDto.getName());
-        player.setDob(playerFormUpdateDto.getDob());
-        player.setHomeTown(playerFormUpdateDto.getHomeTown());
-        player.setPerformance(playerFormUpdateDto.getPerformance());
-        player.setHeight(playerFormUpdateDto.getHeight());
-        player.setWeight(playerFormUpdateDto.getWeight());
-        player.setSalary(playerFormUpdateDto.getSalary());
-        player.setRanking(playerFormUpdateDto.getRanking());
-        player.setAbilityProfile(playerFormUpdateDto.getAbilityProfile());
-        player.setPosition(position);
-        player.setStatus(playerFormUpdateDto.getStatus());
-        if(avatarFileName != null) {
+        if (playerFormUpdateDto.getName() != null && !playerFormUpdateDto.getName().isEmpty()) {
+            player.setName(playerFormUpdateDto.getName());
+        }
+        if (playerFormUpdateDto.getDob() != null) {
+            player.setDob(playerFormUpdateDto.getDob());
+        }
+        if (playerFormUpdateDto.getHomeTown() != null && !playerFormUpdateDto.getHomeTown().isEmpty()) {
+            player.setHomeTown(playerFormUpdateDto.getHomeTown());
+        }
+        if (playerFormUpdateDto.getPerformance() != null && !playerFormUpdateDto.getPerformance().isEmpty()) {
+            player.setPerformance(playerFormUpdateDto.getPerformance());
+        }
+        if (playerFormUpdateDto.getHeight() != null) {
+            player.setHeight(playerFormUpdateDto.getHeight());
+        }
+        if (playerFormUpdateDto.getWeight() != null) {
+            player.setWeight(playerFormUpdateDto.getWeight());
+        }
+        if (playerFormUpdateDto.getSalary() != null) {
+            player.setSalary(playerFormUpdateDto.getSalary());
+        }
+        if (playerFormUpdateDto.getRanking() != null) {
+            player.setRanking(playerFormUpdateDto.getRanking());
+        }
+        if (playerFormUpdateDto.getAbilityProfile() != null && !playerFormUpdateDto.getAbilityProfile().isEmpty()) {
+            player.setAbilityProfile(playerFormUpdateDto.getAbilityProfile());
+        }
+        if (position != null) {
+            player.setPosition(position);
+        }
+        if (playerFormUpdateDto.getStatus() != null && !playerFormUpdateDto.getStatus().isEmpty()) {
+            player.setStatus(playerFormUpdateDto.getStatus());
+        }
+        if (avatarFileName != null && !avatarFileName.isEmpty()) {
             player.setAvatar(avatarFileName);
         }
 

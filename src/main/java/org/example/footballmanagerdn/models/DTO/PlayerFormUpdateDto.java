@@ -10,21 +10,13 @@ import java.sql.Date;
 
 @Data
 public class PlayerFormUpdateDto {
-    @NotBlank
     private String name;
-
-    @NotNull
     private Date dob;
-
-    @NotNull
     private Double salary;
-
     private String homeTown;
     private String performance;
-
     private Double height;
     private Double weight;
-
     private String ranking;
     private String abilityProfile;
     private Long positionId;

@@ -70,8 +70,9 @@ public class CoachController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         coach.setId(coach1.getId());
+        coach.setUser(coach1.getUser());
         coachService.save(coach);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("")
@@ -84,7 +85,7 @@ public class CoachController {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
         coachService.createCoach(coachWithUserDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/search")

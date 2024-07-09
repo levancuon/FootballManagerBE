@@ -1,10 +1,10 @@
 package org.example.footballmanagerdn.services.iml;
 
 
+import org.example.footballmanagerdn.enums.UserRole;
 import org.example.footballmanagerdn.models.Coach;
 import org.example.footballmanagerdn.models.DTO.CoachDTO;
 import org.example.footballmanagerdn.models.DTO.CoachWithUserDTO;
-import org.example.footballmanagerdn.models.Player;
 import org.example.footballmanagerdn.models.User;
 import org.example.footballmanagerdn.repositories.ICoachRepo;
 import org.example.footballmanagerdn.services.ICoachService;
@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 
 
 @Service
@@ -59,6 +58,7 @@ public class CoachService implements ICoachService {
         User user = new User();
         user.setEmail(coachDTO.getEmail());
         user.setPassword(passwordEncoder.encode(coachDTO.getPassword()));
+        user.setRole(UserRole.ROLE_COACH);
         userService.save(user);
         Coach coach = new Coach();
         coach.setId(coachDTO.getId());

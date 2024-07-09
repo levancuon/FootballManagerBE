@@ -3,6 +3,7 @@ package org.example.footballmanagerdn.controllers;
 import org.example.footballmanagerdn.models.Coach;
 import org.example.footballmanagerdn.models.DTO.CoachDTO;
 import org.example.footballmanagerdn.models.DTO.CoachWithUserDTO;
+import org.example.footballmanagerdn.models.Salary;
 import org.example.footballmanagerdn.services.iml.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -97,6 +98,14 @@ public class CoachController {
             ) {
         Page<CoachDTO> coaches = coachService.findAll(page,size,name,homeTown);
         return new ResponseEntity<>(coaches, HttpStatus.OK);
+    }
+    @PostMapping("/money/{id}")
+    public ResponseEntity<?> pay(
+            @Validated @RequestBody Salary salary,
+            @PathVariable("id") Long coachID
+    ) {
+        coachService.createSalary(coachID, salary);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

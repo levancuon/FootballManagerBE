@@ -201,7 +201,7 @@ public class PlayerService implements IPlayerService {
             throw new NotFoundException("Player not found");
         }
 
-        Double totalSalary = playerOptional.get().getSalary() + salary.getBonus() + salary.getAbilitySalary()* salary.getHourPlay();
+        Double totalSalary = playerOptional.get().getSalary() + salary.getBonus() ;
         salary.setTotalSalary(totalSalary);
         salary.setPlayerId(playerId);
         salaryRepo.save(salary);

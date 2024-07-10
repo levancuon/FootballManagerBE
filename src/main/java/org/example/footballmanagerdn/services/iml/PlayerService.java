@@ -12,6 +12,7 @@ import org.example.footballmanagerdn.repositories.IPlayerRepo;
 import org.example.footballmanagerdn.repositories.IPositionRepo;
 import org.example.footballmanagerdn.repositories.ISalaryRepo;
 import org.example.footballmanagerdn.repositories.IUserRepo;
+import org.example.footballmanagerdn.security.CustomUserDetails;
 import org.example.footballmanagerdn.services.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -27,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -210,6 +213,13 @@ public class PlayerService implements IPlayerService {
     @Override
     public Iterable<Salary> getSalaries(Long playerId) {
         return salaryRepo.findAllByPlayerId(playerId);
+    }
+
+    @Override
+    public boolean checkAccess(Authentication authentication, Long id) {
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        Optional<Player> playerOptional = playerRepo.findPlayerByUserId(user.getUser().getId());
+        return playerOptional.isPresent() && Objects.equals(playerOptional.get().getId(), id);
     }
 
 

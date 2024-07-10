@@ -39,7 +39,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/api/positions").permitAll()
                     .requestMatchers(HttpMethod.GET,"/api/me**").authenticated()
                     .requestMatchers(HttpMethod.GET,"/api/players**").hasAnyAuthority( "ROLE_COACH", "ROLE_ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/players/**").hasAnyAuthority( "ROLE_COACH", "ROLE_ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/players/**").authenticated()
                     .requestMatchers(HttpMethod.PUT,"/api/players/**").hasAnyAuthority("ROLE_COACH", "ROLE_ADMIN")
                     .requestMatchers("/api/**").hasAnyAuthority("ROLE_ADMIN")
 

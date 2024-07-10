@@ -4,11 +4,13 @@ import org.example.footballmanagerdn.models.DTO.PlayerDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormCreateDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormUpdateDto;
 import org.example.footballmanagerdn.models.Salary;
+import org.example.footballmanagerdn.models.User;
 import org.example.footballmanagerdn.services.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +44,13 @@ public class PlayerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(
-            @PathVariable("id") Long id
+            @PathVariable("id") Long id,
+            Authentication authentication
     ) {
+        if(!playerService.checkAccess(authentication, id)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
         Optional<PlayerDto> player = playerService.findPlayerById(id);
         if (player.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

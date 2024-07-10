@@ -6,6 +6,7 @@ import org.example.footballmanagerdn.models.DTO.PlayerFormUpdateDto;
 import org.example.footballmanagerdn.models.Player;
 import org.example.footballmanagerdn.models.Salary;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -26,4 +27,6 @@ public interface IPlayerService {
     void createSalary(Long playerId, Salary salary);
 
     Iterable<Salary> getSalaries(Long playerId);
+
+    boolean checkAccess(Authentication authentication, Long id);
 }

@@ -29,4 +29,6 @@ public interface IPlayerRepo extends PagingAndSortingRepository<Player, Long>, C
     );
 
     Optional<PlayerDto> findPlayerById(Long id);
+
+    Optional<Player> findPlayerByUserId(Long id);
 }

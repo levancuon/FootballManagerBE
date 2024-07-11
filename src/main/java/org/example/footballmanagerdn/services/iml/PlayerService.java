@@ -204,7 +204,7 @@ public class PlayerService implements IPlayerService {
             throw new NotFoundException("Player not found");
         }
 
-        Double totalSalary = playerOptional.get().getSalary() + salary.getBonus() ;
+        Double totalSalary = playerOptional.get().getSalary() + salary.getBonus() + salary.getAbilitySalary()* salary.getHourPlay();
         salary.setTotalSalary(totalSalary);
         salary.setPlayerId(playerId);
         salaryRepo.save(salary);
@@ -215,11 +215,10 @@ public class PlayerService implements IPlayerService {
         return salaryRepo.findAllByPlayerId(playerId);
     }
 
+
     @Override
-    public boolean checkAccess(Authentication authentication, Long id) {
-        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
-        Optional<Player> playerOptional = playerRepo.findPlayerByUserId(user.getUser().getId());
-        return playerOptional.isPresent() && Objects.equals(playerOptional.get().getId(), id);
+    public Optional<PlayerDto> findPlayerUserId(Long userId) {
+        return playerRepo.findByUserId(userId);
     }
 
 

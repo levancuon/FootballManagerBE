@@ -1,6 +1,7 @@
 package org.example.footballmanagerdn.services.iml;
 
 
+import org.example.footballmanagerdn.enums.UserRole;
 import org.example.footballmanagerdn.exception.NotFoundException;
 import org.example.footballmanagerdn.models.Coach;
 import org.example.footballmanagerdn.models.DTO.CoachDTO;
@@ -66,6 +67,7 @@ public class CoachService implements ICoachService {
         User user = new User();
         user.setEmail(coachDTO.getEmail());
         user.setPassword(passwordEncoder.encode(coachDTO.getPassword()));
+        user.setRole(UserRole.ROLE_COACH);
         userService.save(user);
         Coach coach = new Coach();
         coach.setId(coachDTO.getId());

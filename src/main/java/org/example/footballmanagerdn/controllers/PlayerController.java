@@ -1,10 +1,12 @@
 package org.example.footballmanagerdn.controllers;
 
+import org.example.footballmanagerdn.enums.UserRole;
 import org.example.footballmanagerdn.models.DTO.PlayerDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormCreateDto;
 import org.example.footballmanagerdn.models.DTO.PlayerFormUpdateDto;
 import org.example.footballmanagerdn.models.Salary;
 import org.example.footballmanagerdn.models.User;
+import org.example.footballmanagerdn.security.CustomUserDetails;
 import org.example.footballmanagerdn.services.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,11 +49,15 @@ public class PlayerController {
             @PathVariable("id") Long id,
             Authentication authentication
     ) {
-//        if(!playerService.checkAccess(authentication, id)) {
-//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//        }
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        Optional<PlayerDto> player;
 
-        Optional<PlayerDto> player = playerService.findPlayerById(id);
+        if(user.getUser().getRole().equals(UserRole.ROLE_PLAYER)) {
+            player = playerService.findPlayerUserId(user.getUser().getId());
+        }else {
+            player = playerService.findPlayerById(id);
+        }
+
         if (player.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

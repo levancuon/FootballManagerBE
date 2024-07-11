@@ -47,9 +47,9 @@ public class PlayerController {
             @PathVariable("id") Long id,
             Authentication authentication
     ) {
-        if(!playerService.checkAccess(authentication, id)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+//        if(!playerService.checkAccess(authentication, id)) {
+//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        }
 
         Optional<PlayerDto> player = playerService.findPlayerById(id);
         if (player.isEmpty()) {

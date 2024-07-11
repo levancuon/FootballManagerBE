@@ -58,7 +58,8 @@ public class CoachService implements ICoachService {
 
     @Override
     public void remove(Long id) {
-        coachRepo.deleteById(id);
+
+        coachRepo.deleteCoach(id);
     }
 
     public void createCoach(CoachWithUserDTO coachDTO) {

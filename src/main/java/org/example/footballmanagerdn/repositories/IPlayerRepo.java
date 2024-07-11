@@ -5,6 +5,7 @@ import org.example.footballmanagerdn.models.Player;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -31,4 +32,7 @@ public interface IPlayerRepo extends PagingAndSortingRepository<Player, Long>, C
     Optional<PlayerDto> findPlayerById(Long id);
 
     Optional<Player> findPlayerByUserId(Long id);
+
+    @Procedure(name = "deletePlayer")
+    void deletePlayer(Long playerId);
 }

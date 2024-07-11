@@ -7,6 +7,7 @@ import org.example.footballmanagerdn.models.DTO.CoachWithUserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -27,4 +28,7 @@ public interface ICoachRepo extends PagingAndSortingRepository<Coach, Long>, Cru
             @Param("homeTown") String homeTown
     );
     Iterable<Coach> findAllByNameContaining(String search);
+
+    @Procedure(name = "deleteCoach")
+    void deleteCoach(Long coachId);
 }

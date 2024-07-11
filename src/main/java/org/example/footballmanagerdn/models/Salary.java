@@ -10,14 +10,16 @@ import java.sql.Date;
 
 @Entity
 @Data
-@Table(name = "salaries")
+@Table(name = "salaries", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"week", "playerId"}),
+        @UniqueConstraint(columnNames = {"week", "coachId"})
+})
 public class Salary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(unique = true)
     private String week;
 
 

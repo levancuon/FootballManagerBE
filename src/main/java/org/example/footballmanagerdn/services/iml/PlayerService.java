@@ -194,7 +194,7 @@ public class PlayerService implements IPlayerService {
         if (playerOptional.isEmpty()) {
             throw new NotFoundException("Player not found");
         }
-        playerRepo.deleteById(id);
+        playerRepo.deletePlayer(id);
     }
 
     @Override
